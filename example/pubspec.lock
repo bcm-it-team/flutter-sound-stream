@@ -21,6 +21,13 @@ packages:
     dependency: transitive
     description:
       name: characters
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
+  charcode:
+    dependency: transitive
+    description:
+      name: characters
       sha256: "04a925763edad70e8443c99234dc3328f442e811f1d8fd1a72f1c8ad0f69a605"
       url: "https://pub.dev"
     source: hosted
