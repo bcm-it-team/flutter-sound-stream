@@ -259,6 +259,7 @@ public class SwiftSoundStreamPlugin: NSObject, FlutterPlugin {
     
     private func stopRecording(_ result: @escaping FlutterResult) {
         stopRecorder()
+        stopEngine()
         sendRecorderStatus(SoundStreamStatus.Stopped)
         result(true)
     }
