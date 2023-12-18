@@ -49,9 +49,9 @@ void writeWaveFileHeader(File out, int totalAudioLen, int longSampleRate,
 }
 
 main() {
-  Timer timer;
-  File file, tmp;
-  int dataSize;
+  Timer? timer = null;
+  File? file, tmp = null;
+  int? dataSize = null;
   WebSocket.connect('ws://localhost:$_PORT').then((WebSocket ws) {
     if (ws?.readyState == WebSocket.open) {
       ws.listen(

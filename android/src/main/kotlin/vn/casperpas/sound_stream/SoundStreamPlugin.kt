@@ -42,7 +42,7 @@ enum class SoundStreamStatus {
 }
 
 /** SoundStreamPlugin */
-public class SoundStreamPlugin : FlutterPlugin,
+class SoundStreamPlugin : FlutterPlugin,
         MethodCallHandler,
         PluginRegistry.RequestPermissionsResultListener,
         ActivityAware {
@@ -179,14 +179,11 @@ public class SoundStreamPlugin : FlutterPlugin,
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>?,
-                                            grantResults: IntArray?): Boolean {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray): Boolean {
         when (requestCode) {
             audioRecordPermissionCode -> {
-                if (grantResults != null) {
-                    permissionToRecordAudio = grantResults.isNotEmpty() &&
-                            grantResults[0] == PackageManager.PERMISSION_GRANTED
-                }
+                permissionToRecordAudio = grantResults.isNotEmpty() &&
+                        grantResults[0] == PackageManager.PERMISSION_GRANTED
                 completeInitializeRecorder()
                 return true
             }
@@ -220,6 +217,17 @@ public class SoundStreamPlugin : FlutterPlugin,
 
     private fun initRecorder() {
         if (mRecorder?.state == AudioRecord.STATE_INITIALIZED) {
+            return
+        }
+
+        if (ActivityCompat.checkSelfPermission(pluginContext!!, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
             return
         }
         mRecorder = AudioRecord(MediaRecorder.AudioSource.MIC, mRecordSampleRate, AudioFormat.CHANNEL_IN_MONO, mRecordFormat, mRecorderBufferSize)
