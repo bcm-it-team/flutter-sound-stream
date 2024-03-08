@@ -217,6 +217,7 @@ public class SwiftSoundStreamPlugin: NSObject, FlutterPlugin {
     }
     
     private func startRecorder() {
+        initEngine()
         stopRecorder()
         let input = mAudioEngine.inputNode
         let inputFormat = input.inputFormat(forBus: mRecordBus)
